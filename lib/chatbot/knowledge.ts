@@ -200,7 +200,7 @@ const intents: Intent[] = [
   },
   {
     id: "who",
-    keywords: ["qui", "who", "presente", "presentation", "about", "propos", "yekzan", "kus", "profil", "profile", "parle moi de", "tell me about"],
+    keywords: ["qui est", "who is", "presente toi", "presentation", "profil", "profile", "presente moi yekzan", "qui es tu"],
     answer: { fr: FACTS.identity.fr, en: FACTS.identity.en },
   },
   {
