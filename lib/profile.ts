@@ -8,7 +8,7 @@
  */
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://yekzan-kus.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://yekzan-portfolio.vercel.app";
 
 export const profile = {
   name: "Yekzan KUS",

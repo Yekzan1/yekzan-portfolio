@@ -10,7 +10,7 @@
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-ff5c97)](https://www.framer.com/motion/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-8b5cf6.svg)](LICENSE)
 
-[**Live demo →**](https://yekzan-kus.vercel.app)
+[**Live demo →**](https://yekzan-portfolio.vercel.app)
 
 </div>
 
@@ -73,7 +73,7 @@ Everything is optional — the site runs with zero configuration. See [`.env.exa
 
 | Variable               | Default                        | Purpose                                              |
 | ---------------------- | ------------------------------ | ---------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL` | `https://yekzan-kus.vercel.app`| Canonical URL for SEO, sitemap and OG images.        |
+| `NEXT_PUBLIC_SITE_URL` | `https://yekzan-portfolio.vercel.app`| Canonical URL for SEO, sitemap and OG images.        |
 | `ANTHROPIC_API_KEY`    | _(empty)_                      | Enables the Claude-powered assistant. Leave empty to use the free offline responder. |
 | `ANTHROPIC_MODEL`      | `claude-haiku-4-5-20251001`    | Model used when a key is provided.                   |
 
