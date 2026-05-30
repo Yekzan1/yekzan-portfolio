@@ -62,12 +62,12 @@ export const en: Dictionary = {
 
   about: {
     eyebrow: "About",
-    title: "Obsessed with the details, from the pixel to the server.",
-    lead: "Yekzan KUS — full-stack web developer.",
+    title: "A violinist's discipline, a developer's obsession with detail.",
+    lead: "Yekzan KUS — from the conservatory to code.",
     paragraphs: [
-      "Web development became a real passion. Over a few years and several agency placements, I learned to ship — fast, clean and on my own: modern websites, a full e-commerce store, a PHP search engine, Python automation tools.",
-      "I'm comfortable across the whole chain: from interface design (Angular, JavaScript) to the back-end (PHP, Java, Python), down to server configuration (Linux, Cisco, VMware). That range lets me take a project end to end.",
-      "Today I'm training in a BTS SIO (SLAM track) while I keep building, with a simple goal: become a developer people can rely on. Away from code, ten years of violin left me with a taste for precision.",
+      "For ten years I studied the violin at the Villefranche Conservatory. Music taught me something I never unlearned while programming: precision isn't a luxury, it's the baseline.",
+      "I turned that discipline into a passion for web development. Over a few years and several agency placements, I learned to ship — fast, clean and on my own: modern websites, a full e-commerce store, a PHP search engine, Python automation tools.",
+      "Today I'm training in a BTS SIO (SLAM track) while I keep building. My goal is simple: become a developer people can rely on — one who can take a project from interface design down to the server.",
     ],
     signature: "“Made rapid progress thanks to his attentiveness and motivation.”",
     signatureSource: "— excerpt from a recommendation letter",
