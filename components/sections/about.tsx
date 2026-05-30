@@ -12,7 +12,7 @@ export function About({ dict }: { dict: Dictionary }) {
       <Container>
         <SectionHeading eyebrow={dict.about.eyebrow} title={dict.about.title} lead={dict.about.lead} />
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:gap-14">
+        <div className="mt-12 grid gap-8 md:mt-14 md:grid-cols-[1.4fr_1fr] md:gap-10 lg:gap-14">
           {/* Narrative */}
           <div className="flex flex-col gap-6">
             {dict.about.paragraphs.map((p, i) => (

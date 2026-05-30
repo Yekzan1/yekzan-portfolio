@@ -14,7 +14,7 @@ export function Recommendations({ dict }: { dict: Dictionary }) {
           lead={dict.recommendations.lead}
         />
 
-        <RevealGroup className="mt-14 grid gap-4 lg:grid-cols-3" stagger={0.1}>
+        <RevealGroup className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3" stagger={0.1}>
           {recommenders.map((rec) => {
             const quote = dict.recommendations.quotes[rec.id as keyof typeof dict.recommendations.quotes];
             return (
