@@ -66,7 +66,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
           {/* Headline */}
           <motion.h1
             variants={item}
-            className="mt-7 max-w-4xl text-balance font-semibold leading-[1.05] tracking-[-0.02em] text-[clamp(2.1rem,7vw,4.75rem)]"
+            className="mt-7 max-w-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-[clamp(1.9rem,6.4vw,4.75rem)]"
           >
             {dict.hero.titleLead}{" "}
             <span className="text-gradient font-serif font-normal italic">
