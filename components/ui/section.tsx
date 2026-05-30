@@ -10,7 +10,7 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={cn("mx-auto w-full max-w-6xl px-5 sm:px-8", className)}>{children}</div>
+    <div className={cn("mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8", className)}>{children}</div>
   );
 }
 
@@ -53,7 +53,7 @@ export function SectionHeading({
         <Eyebrow>{eyebrow}</Eyebrow>
       </Reveal>
       <Reveal delay={0.05}>
-        <h2 className="max-w-3xl text-balance font-serif text-3xl font-normal leading-[1.1] tracking-tight sm:text-4xl md:text-[2.85rem]">
+        <h2 className="max-w-3xl text-balance font-serif font-normal leading-[1.12] tracking-tight text-[clamp(1.7rem,4.8vw,2.85rem)]">
           {title}
         </h2>
       </Reveal>
@@ -83,7 +83,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn("relative py-24 sm:py-32", className)}>
+    <section id={id} className={cn("relative py-20 sm:py-28 lg:py-32", className)}>
       {children}
     </section>
   );

@@ -94,28 +94,52 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
   const dict = getDictionary(locale);
 
+  const lang = locale === "fr" ? "fr-FR" : "en-US";
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: profile.name,
-    jobTitle:
-      locale === "fr" ? "Développeur web full-stack" : "Full-stack web developer",
-    description: dict.meta.description,
-    email: `mailto:${profile.email}`,
-    telephone: `+${profile.phoneIntl.replace(/^\+?/, "")}`,
-    url: SITE_URL,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Limas",
-      addressRegion: "Beaujolais",
-      addressCountry: "FR",
-    },
-    knowsLanguage: ["fr-FR", "en"],
-    knowsAbout: skillGroups.flatMap((g) => g.items),
-    alumniOf: {
-      "@type": "EducationalOrganization",
-      name: "Business School by CSND",
-    },
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: `${profile.name} — Portfolio`,
+        description: dict.meta.description,
+        inLanguage: lang,
+        publisher: { "@id": `${SITE_URL}/#person` },
+      },
+      {
+        "@type": "Person",
+        "@id": `${SITE_URL}/#person`,
+        name: profile.name,
+        jobTitle: locale === "fr" ? "Développeur web full-stack" : "Full-stack web developer",
+        description: dict.meta.description,
+        email: `mailto:${profile.email}`,
+        telephone: `+${profile.phoneIntl.replace(/^\+?/, "")}`,
+        url: SITE_URL,
+        image: `${SITE_URL}/apple-icon`,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Limas",
+          addressRegion: "Beaujolais",
+          addressCountry: "FR",
+        },
+        knowsLanguage: ["fr-FR", "en"],
+        knowsAbout: skillGroups.flatMap((g) => g.items),
+        alumniOf: { "@type": "EducationalOrganization", name: "Business School by CSND" },
+        sameAs: profile.socials.map((s) => s.href),
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": `${SITE_URL}/${locale}#profilepage`,
+        url: `${SITE_URL}/${locale}`,
+        name: dict.meta.title,
+        description: dict.meta.description,
+        inLanguage: lang,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${SITE_URL}/#person` },
+        primaryImageOfPage: `${SITE_URL}/${locale}/opengraph-image`,
+      },
+    ],
   };
 
   return (

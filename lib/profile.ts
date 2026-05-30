@@ -26,9 +26,13 @@ export const profile = {
   // The CV PDF is shipped in /public so the "Download CV" CTA works out of the box.
   cvPath: "/cv-yekzan-kus.pdf",
 
-  // No social profiles are listed on the CV — none are invented here.
-  // Add them later in this object and they will appear automatically.
-  socials: [] as { label: string; href: string; icon: "github" | "linkedin" | "x" | "dribbble" }[],
+  // Public GitHub profile (this portfolio is open source there).
+  socials: [
+    { label: "GitHub", href: "https://github.com/Yekzan1", icon: "github" },
+  ] as { label: string; href: string; icon: "github" | "linkedin" | "x" | "dribbble" }[],
+
+  // Source repository for this site (open source).
+  repoUrl: "https://github.com/Yekzan1/yekzan-portfolio",
 } as const;
 
 /** Conservative, defensible headline figures (each is directly verifiable from the CV/letters). */
@@ -36,7 +40,7 @@ export const stats = [
   { value: "3", labelKey: "recommendations" },
   { value: "4", labelKey: "internships" },
   { value: "6+", labelKey: "shipped" },
-  { value: "10", labelKey: "violin" },
+  { value: "15+", labelKey: "technologies" },
 ] as const;
 
 /** Technology stack, grouped. Every item appears on the CV or in a letter. */

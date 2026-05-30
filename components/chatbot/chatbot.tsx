@@ -117,7 +117,10 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
         transition={{ delay: 0.6, type: "spring", stiffness: 260, damping: 20 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-accent text-accent-foreground shadow-[0_10px_40px_-8px_var(--ring)] sm:bottom-6 sm:right-6"
+        className={cn(
+          "fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-accent text-accent-foreground shadow-[0_10px_40px_-8px_var(--ring)] sm:bottom-6 sm:right-6",
+          open && "max-sm:hidden",
+        )}
       >
         <span className="absolute inset-0 -z-10 rounded-full bg-accent opacity-60 blur-md" aria-hidden />
         <AnimatePresence mode="wait" initial={false}>
@@ -144,7 +147,7 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed bottom-24 right-4 z-50 flex h-[min(34rem,72svh)] w-[min(24rem,calc(100vw-2rem))] flex-col overflow-hidden rounded-3xl border border-border bg-background-soft/95 shadow-2xl backdrop-blur-xl sm:right-6"
+            className="fixed inset-x-3 bottom-3 z-50 flex h-[min(82svh,40rem)] flex-col overflow-hidden rounded-3xl border border-border bg-background-soft/95 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-24 sm:right-6 sm:h-[min(34rem,72svh)] sm:w-[24rem]"
           >
             {/* Header */}
             <header className="flex items-center gap-3 border-b border-border px-4 py-3.5">
@@ -178,7 +181,14 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
             </header>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            <div
+              ref={scrollRef}
+              role="log"
+              aria-live="polite"
+              aria-atomic="false"
+              aria-label={dict.headerTitle}
+              className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+            >
               {messages.map((m) => (
                 <Bubble key={m.id} role={m.role} content={m.content} />
               ))}

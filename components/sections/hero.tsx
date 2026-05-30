@@ -47,10 +47,10 @@ export function Hero({ dict }: { dict: Dictionary }) {
   };
 
   return (
-    <section id="hero" className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-28 pb-16">
+    <section id="hero" className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-24 pb-14 sm:pt-28 sm:pb-16">
       <AuroraBackground />
 
-      <div className="mx-auto w-full max-w-5xl px-5 sm:px-8">
+      <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
         <motion.div variants={container} initial="hidden" animate="show" className="flex flex-col items-start">
           {/* Availability pill */}
           <motion.div variants={item}>
@@ -66,7 +66,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
           {/* Headline */}
           <motion.h1
             variants={item}
-            className="mt-7 max-w-4xl text-balance text-4xl font-semibold leading-[1.04] tracking-[-0.02em] sm:text-6xl md:text-7xl"
+            className="mt-7 max-w-4xl text-balance font-semibold leading-[1.05] tracking-[-0.02em] text-[clamp(2.1rem,7vw,4.75rem)]"
           >
             {dict.hero.titleLead}{" "}
             <span className="text-gradient font-serif font-normal italic">
@@ -78,7 +78,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
           {/* Name + rotating role */}
           <motion.p
             variants={item}
-            className="mt-6 flex flex-wrap items-center gap-x-2 text-lg text-muted sm:text-xl"
+            className="mt-6 flex flex-wrap items-center gap-x-2 text-muted text-[clamp(1rem,3.4vw,1.25rem)]"
           >
             <span className="font-medium text-foreground">{profile.name}</span>
             <span className="text-muted-2">—</span>
@@ -116,7 +116,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
                 <dt className="order-2 text-xs leading-snug text-muted">
                   {dict.hero.statsLabels[stat.labelKey as keyof typeof dict.hero.statsLabels]}
                 </dt>
-                <dd className="order-1 font-serif text-3xl font-normal tracking-tight text-foreground sm:text-4xl">
+                <dd className="order-1 font-serif font-normal tracking-tight text-foreground text-[clamp(1.9rem,5.5vw,2.5rem)]">
                   {stat.value}
                 </dd>
               </div>

@@ -142,12 +142,46 @@ const intents: Intent[] = [
   {
     id: "experience",
     keywords: [
-      "experience", "experiences", "parcours", "stage", "stages", "internship", "work", "job",
-      "emploi", "carriere", "background", "entreprise", "entreprises", "agence", "projets", "projet", "projects", "realisations",
+      "experience", "experiences", "parcours", "stage", "stages", "internship", "internships",
+      "work", "job", "emploi", "carriere", "background", "entreprise", "entreprises", "agence", "agences",
     ],
     answer: {
       fr: `Yekzan a réalisé 4 stages : ${FACTS.unimage.fr}\n\n${FACTS.rougevert.fr}\n\n${FACTS.martingale.fr}\n\n${FACTS.pharmagest.fr}`,
       en: `Yekzan completed 4 internships: ${FACTS.unimage.en}\n\n${FACTS.rougevert.en}\n\n${FACTS.martingale.en}\n\n${FACTS.pharmagest.en}`,
+    },
+  },
+  {
+    id: "projects",
+    keywords: [
+      "projet", "projets", "project", "projects", "realisation", "realisations", "realise",
+      "portfolio", "construit", "built", "build", "cree", "developpe", "accomplissement", "made",
+    ],
+    answer: {
+      fr: `Quelques réalisations concrètes : 2 sites web modernes développés en autonomie chez Unimage, une boutique e-commerce complète sous PrestaShop, un site pour l'UNSA réalisé en 3 jours chez Rougevert, un moteur de recherche développé en PHP, et des outils d'automatisation (web scraping) en Python.`,
+      en: `A few concrete projects: 2 modern websites built solo at Unimage, a complete PrestaShop e-commerce store, a website for the UNSA built in 3 days at Rougevert, a search engine developed in PHP, and Python web-scraping automation tools.`,
+    },
+  },
+  {
+    id: "strengths",
+    keywords: [
+      "points forts", "point fort", "qualite", "qualites", "atout", "atouts", "force", "forces",
+      "pourquoi le recruter", "pourquoi lui", "strength", "strengths", "why hire", "why should",
+      "soft skills", "savoir etre", "valeur ajoutee",
+    ],
+    answer: {
+      fr: `Ce qui revient dans ses 3 lettres de recommandation : sérieux, curiosité et envie d'apprendre, progression rapide, autonomie et esprit d'initiative, créativité (solutions innovantes), et un excellent relationnel — ponctuel, impliqué et professionnel.`,
+      en: `What recurs across his 3 recommendation letters: seriousness, curiosity and eagerness to learn, fast progress, autonomy and initiative, creativity (innovative solutions), and great people skills — punctual, committed and professional.`,
+    },
+  },
+  {
+    id: "meta",
+    keywords: [
+      "es tu une ia", "es tu un robot", "es tu un bot", "are you ai", "are you a bot", "are you human",
+      "chatgpt", "intelligence artificielle", "qui es tu toi", "t es quoi",
+    ],
+    answer: {
+      fr: `Je suis un assistant automatisé, entraîné uniquement sur le CV et les lettres de recommandation de Yekzan — donc 100 % factuel. Pour échanger directement avec lui : ${profile.email}.`,
+      en: `I'm an automated assistant, trained only on Yekzan's CV and recommendation letters — so strictly factual. To talk to him directly: ${profile.email}.`,
     },
   },
   {
@@ -214,8 +248,8 @@ const intents: Intent[] = [
 ];
 
 const DEFAULT_ANSWER: Record<Locale, string> = {
-  fr: `Bonne question ! Je réponds uniquement à partir du CV et des recommandations de Yekzan. Je peux détailler : ses compétences techniques, ses expériences (Unimage, Rougevert, Martingale & Céleste, Pharmagest), ses recommandations, sa formation, ou ses coordonnées. Sur quoi puis-je préciser ?`,
-  en: `Good question! I only answer from Yekzan's CV and recommendations. I can detail: his technical skills, his experience (Unimage, Rougevert, Martingale & Céleste, Pharmagest), his references, his education, or his contact details. What would you like me to expand on?`,
+  fr: `Bonne question ! Je réponds uniquement à partir du CV et des recommandations de Yekzan. Je peux détailler : ses compétences techniques, ses projets, ses expériences en entreprise, ses points forts, ses recommandations, sa formation ou ses coordonnées. Que souhaitez-vous savoir ?`,
+  en: `Good question! I answer only from Yekzan's CV and recommendations. I can cover: his technical skills, his projects, his work experience, his strengths, his references, his education, or how to reach him. What would you like to know?`,
 };
 
 export function answerLocally(message: string, locale: Locale): string {

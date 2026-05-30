@@ -32,7 +32,7 @@ export interface Dictionary {
       recommendations: string;
       internships: string;
       shipped: string;
-      violin: string;
+      technologies: string;
     };
   };
   about: {
