@@ -2,7 +2,7 @@ import type { Dictionary } from "./types";
 
 export const en: Dictionary = {
   meta: {
-    title: "Yekzan KUS — Full-stack web developer & builder",
+    title: "Yekzan KUS — Full-stack web developer",
     description:
       "Full-stack web developer based in the Beaujolais region of France. I design and build websites, e-commerce stores and custom tools — from Angular & PHP to Python & WordPress.",
     keywords: [
@@ -37,18 +37,17 @@ export const en: Dictionary = {
   hero: {
     badge: "Web developer · Builder",
     availability: "Open to projects & collaborations",
-    titleLead: "I design and code",
-    titleAccent: "web experiences",
-    titleTail: "that leave a mark.",
+    titleLead: "I design and build",
+    titleAccent: "bespoke",
+    titleTail: "websites.",
     roles: [
       "Full-stack developer",
       "Web integrator",
       "Python automation",
       "WordPress & e-commerce",
-      "Builder",
     ],
     description:
-      "Full-stack developer based in the Beaujolais, France. I build websites, e-commerce stores and bespoke tools — from interface design all the way down to the server.",
+      "Full-stack developer based in the Beaujolais, France. I build websites, online stores and internal tools — thought through, built and shipped with care.",
     ctaPrimary: "Explore my work",
     ctaSecondary: "Download CV",
     scroll: "Scroll",
@@ -110,7 +109,7 @@ export const en: Dictionary = {
 
   skills: {
     eyebrow: "Tech stack",
-    title: "A complete toolbox, from the pixel to the server.",
+    title: "Front, back, and everything in between.",
     lead: "The technologies I actually use — learned in training and proven on the job.",
     groups: {
       frontend: "Front-end",

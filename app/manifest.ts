@@ -8,8 +8,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Portfolio — développeur web full-stack / full-stack web developer.",
     start_url: "/fr",
     display: "standalone",
-    background_color: "#07070a",
-    theme_color: "#07070a",
+    background_color: "#fbf8f3",
+    theme_color: "#fbf8f3",
     icons: [
       { src: "/icon", sizes: "64x64", type: "image/png" },
       { src: "/apple-icon", sizes: "180x180", type: "image/png" },

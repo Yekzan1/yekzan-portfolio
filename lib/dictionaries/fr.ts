@@ -2,7 +2,7 @@ import type { Dictionary } from "./types";
 
 export const fr: Dictionary = {
   meta: {
-    title: "Yekzan KUS — Développeur web full-stack & builder",
+    title: "Yekzan KUS — Développeur web full-stack",
     description:
       "Développeur web full-stack basé dans le Beaujolais. Je conçois et code des sites, des boutiques e-commerce et des outils sur-mesure — d'Angular & PHP à Python & WordPress.",
     keywords: [
@@ -37,18 +37,17 @@ export const fr: Dictionary = {
   hero: {
     badge: "Développeur web · Builder",
     availability: "Ouvert aux projets & collaborations",
-    titleLead: "Je conçois et je code des",
-    titleAccent: "expériences web",
-    titleTail: "qui marquent.",
+    titleLead: "Je conçois et je développe des",
+    titleAccent: "sites web",
+    titleTail: "sur-mesure.",
     roles: [
       "Développeur full-stack",
       "Intégrateur web",
       "Automatisation Python",
       "WordPress & e-commerce",
-      "Builder",
     ],
     description:
-      "Développeur full-stack basé dans le Beaujolais. Je construis des sites, des boutiques e-commerce et des outils sur-mesure — du design d'interface jusqu'au serveur.",
+      "Développeur full-stack basé dans le Beaujolais. Je construis des sites, des boutiques en ligne et des outils internes — pensés, codés et livrés avec soin.",
     ctaPrimary: "Découvrir mon parcours",
     ctaSecondary: "Télécharger le CV",
     scroll: "Défiler",
@@ -110,7 +109,7 @@ export const fr: Dictionary = {
 
   skills: {
     eyebrow: "Stack technique",
-    title: "Une boîte à outils complète, du pixel au serveur.",
+    title: "Front, back, et tout ce qu'il y a entre.",
     lead: "Les technologies que j'utilise réellement — apprises en formation et éprouvées en stage.",
     groups: {
       frontend: "Front-end",

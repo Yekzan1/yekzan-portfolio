@@ -21,77 +21,45 @@ export default async function OpengraphImage({ params }: { params: Promise<{ loc
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "72px",
-          background: "#07070a",
-          color: "#f2f2f5",
-          fontFamily: "sans-serif",
-          position: "relative",
+          padding: "68px 76px",
+          background: "#fbf8f3",
+          color: "#1b1714",
+          fontFamily: "Georgia, serif",
         }}
       >
-        {/* gradient glow */}
+        {/* Masthead */}
         <div
           style={{
-            position: "absolute",
-            top: -160,
-            right: -120,
-            width: 620,
-            height: 620,
-            borderRadius: "9999px",
-            background: "radial-gradient(circle, rgba(139,92,246,0.55), transparent 70%)",
             display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            borderBottom: "1px solid rgba(27,23,20,0.18)",
+            paddingBottom: 22,
+            fontSize: 22,
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            color: "#5c534a",
           }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: -200,
-            left: -140,
-            width: 560,
-            height: 560,
-            borderRadius: "9999px",
-            background: "radial-gradient(circle, rgba(56,189,248,0.4), transparent 70%)",
-            display: "flex",
-          }}
-        />
-
-        {/* Top: brand */}
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div
-            style={{
-              width: 64,
-              height: 64,
-              borderRadius: 18,
-              background: "linear-gradient(135deg, #8b5cf6, #38bdf8)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 30,
-              fontWeight: 700,
-            }}
-          >
-            YK
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: 30, fontWeight: 600 }}>{profile.name}</span>
-            <span style={{ fontSize: 22, color: "#9a9aa6" }}>{profile.locationShort}</span>
-          </div>
+        >
+          <span style={{ color: "#1b1714" }}>{profile.name}</span>
+          <span>{profile.locationShort}</span>
         </div>
 
-        {/* Middle: headline */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, maxWidth: 980 }}>
-          <span style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+        {/* Title */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 920 }}>
+          <span style={{ fontSize: 62, fontWeight: 500, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
             {dict.hero.titleLead}{" "}
-            <span style={{ color: "#a78bfa" }}>{dict.hero.titleAccent}</span> {dict.hero.titleTail}
+            <span style={{ fontStyle: "italic", color: "#7a2230" }}>{dict.hero.titleAccent}</span>{" "}
+            {dict.hero.titleTail}
           </span>
-          <span style={{ fontSize: 30, color: "#9a9aa6", marginTop: 8 }}>{dict.meta.title}</span>
         </div>
 
-        {/* Bottom: stats */}
-        <div style={{ display: "flex", gap: 56 }}>
+        {/* Figures */}
+        <div style={{ display: "flex", gap: 64, borderTop: "1px solid rgba(27,23,20,0.18)", paddingTop: 26 }}>
           {stats.map((s) => (
             <div key={s.labelKey} style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontSize: 46, fontWeight: 700 }}>{s.value}</span>
-              <span style={{ fontSize: 20, color: "#9a9aa6" }}>
+              <span style={{ fontSize: 44, fontWeight: 500 }}>{s.value}</span>
+              <span style={{ fontSize: 19, color: "#5c534a", fontFamily: "sans-serif" }}>
                 {dict.hero.statsLabels[s.labelKey as keyof typeof dict.hero.statsLabels]}
               </span>
             </div>

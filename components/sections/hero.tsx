@@ -1,163 +1,70 @@
-"use client";
-
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { ArrowDown, ArrowUpRight, Download } from "lucide-react";
 import type { Dictionary } from "@/lib/dictionaries/types";
-import { profile, stats, techRibbon } from "@/lib/profile";
-import { AuroraBackground } from "@/components/ui/aurora-background";
-import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/ui/magnetic";
-
-const EASE = [0.22, 1, 0.36, 1] as const;
-
-function RotatingRole({ roles }: { roles: string[] }) {
-  const [index, setIndex] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setIndex((i) => (i + 1) % roles.length), 2600);
-    return () => clearInterval(t);
-  }, [roles.length]);
-
-  return (
-    <span className="relative inline-grid">
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={index}
-          initial={{ y: "0.7em", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: "-0.7em", opacity: 0 }}
-          transition={{ duration: 0.4, ease: EASE }}
-          className="font-medium text-foreground"
-        >
-          {roles[index]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
-  );
-}
+import { profile, stats } from "@/lib/profile";
+import { Container } from "@/components/ui/section";
+import { Button, Arrow } from "@/components/ui/button";
+import { Reveal } from "@/components/ui/reveal";
 
 export function Hero({ dict }: { dict: Dictionary }) {
-  const container = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
-  };
-  const item = {
-    hidden: { opacity: 0, y: 22 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
-  };
-
   return (
-    <section id="hero" className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-24 pb-14 sm:pt-28 sm:pb-16">
-      <AuroraBackground />
-
-      <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 lg:px-8">
-        <motion.div variants={container} initial="hidden" animate="show" className="flex flex-col items-start">
-          {/* Availability pill */}
-          <motion.div variants={item}>
-            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-medium text-muted backdrop-blur">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-              </span>
+    <section id="hero" className="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-24">
+      <Container>
+        {/* Masthead line */}
+        <Reveal>
+          <div className="eyebrow flex items-center justify-between gap-4 border-b border-line pb-4 uppercase tracking-[0.14em]">
+            <span className="text-ink">{profile.name}</span>
+            <span className="hidden items-center gap-2 sm:inline-flex">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
               {dict.hero.availability}
             </span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            variants={item}
-            className="mt-7 max-w-4xl font-semibold leading-[1.06] tracking-[-0.02em] text-[clamp(1.9rem,6.4vw,4.75rem)]"
-          >
-            {dict.hero.titleLead}{" "}
-            <span className="text-gradient font-serif font-normal italic">
-              {dict.hero.titleAccent}
-            </span>{" "}
-            {dict.hero.titleTail}
-          </motion.h1>
-
-          {/* Name + rotating role */}
-          <motion.p
-            variants={item}
-            className="mt-6 flex flex-wrap items-center gap-x-2 text-muted text-[clamp(1rem,3.4vw,1.25rem)]"
-          >
-            <span className="font-medium text-foreground">{profile.name}</span>
-            <span className="text-muted-2">—</span>
-            <RotatingRole roles={dict.hero.roles} />
-          </motion.p>
-
-          {/* Description */}
-          <motion.p variants={item} className="mt-5 max-w-xl text-pretty text-base leading-relaxed text-muted">
-            {dict.hero.description}
-          </motion.p>
-
-          {/* CTAs */}
-          <motion.div variants={item} className="mt-9 flex flex-wrap items-center gap-3">
-            <Magnetic>
-              <Button href="#work" size="lg">
-                {dict.hero.ctaPrimary}
-                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Button>
-            </Magnetic>
-            <Magnetic strength={0.25}>
-              <Button href={profile.cvPath} variant="secondary" size="lg" download>
-                <Download className="h-4 w-4" />
-                {dict.hero.ctaSecondary}
-              </Button>
-            </Magnetic>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.dl
-            variants={item}
-            className="mt-14 grid w-full max-w-2xl grid-cols-2 gap-x-6 gap-y-7 sm:grid-cols-4"
-          >
-            {stats.map((stat) => (
-              <div key={stat.labelKey} className="flex flex-col gap-1">
-                <dt className="order-2 text-xs leading-snug text-muted">
-                  {dict.hero.statsLabels[stat.labelKey as keyof typeof dict.hero.statsLabels]}
-                </dt>
-                <dd className="order-1 font-serif font-normal tracking-tight text-foreground text-[clamp(1.9rem,5.5vw,2.5rem)]">
-                  {stat.value}
-                </dd>
-              </div>
-            ))}
-          </motion.dl>
-        </motion.div>
-      </div>
-
-      {/* Tech ribbon */}
-      <div className="relative mt-16 w-full">
-        <div className="mask-fade-x flex overflow-hidden">
-          <div className="flex shrink-0 items-center gap-3 pr-3" style={{ animation: "var(--animate-marquee)" }}>
-            {[...techRibbon, ...techRibbon].map((tech, i) => (
-              <span
-                key={`${tech}-${i}`}
-                className="whitespace-nowrap rounded-full border border-border bg-surface px-4 py-1.5 text-sm text-muted"
-              >
-                {tech}
-              </span>
-            ))}
+            <span>{profile.locationShort}</span>
           </div>
-        </div>
-      </div>
+        </Reveal>
 
-      {/* Scroll cue */}
-      <motion.a
-        href="#about"
-        aria-label={dict.hero.scroll}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2 }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-2 sm:flex"
-      >
-        {dict.hero.scroll}
-        <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-        >
-          <ArrowDown className="h-4 w-4" />
-        </motion.span>
-      </motion.a>
+        {/* Headline */}
+        <Reveal delay={0.06}>
+          <h1 className="mt-10 max-w-[16ch] font-display font-normal leading-[1.0] tracking-[-0.025em] text-[clamp(2.6rem,8.5vw,5.7rem)] sm:mt-12">
+            {dict.hero.titleLead}{" "}
+            <em className="font-display italic text-accent">{dict.hero.titleAccent}</em>{" "}
+            {dict.hero.titleTail}
+          </h1>
+        </Reveal>
+
+        {/* Lower asymmetric row */}
+        <div className="mt-14 grid gap-12 md:grid-cols-[1.25fr_1fr] md:items-end md:gap-16">
+          <Reveal delay={0.12}>
+            <div>
+              <p className="max-w-md text-pretty text-[1.15rem] leading-relaxed text-ink-2">
+                {dict.hero.description}
+              </p>
+              <div className="mt-9 flex flex-wrap items-center gap-x-8 gap-y-4">
+                <Button href="#work" size="lg">
+                  {dict.hero.ctaPrimary}
+                  <Arrow />
+                </Button>
+                <Button href={profile.cvPath} variant="link" size="lg" download>
+                  {dict.hero.ctaSecondary} ↓
+                </Button>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Figures — magazine colophon */}
+          <Reveal delay={0.18}>
+            <dl className="grid grid-cols-2 gap-x-8 gap-y-7 border-t border-line pt-7 md:border-l md:border-t-0 md:pl-12 md:pt-1">
+              {stats.map((s) => (
+                <div key={s.labelKey} className="flex flex-col gap-1">
+                  <dt className="stat-num font-display text-[2.6rem] font-normal leading-none text-ink">
+                    {s.value}
+                  </dt>
+                  <dd className="text-sm leading-snug text-ink-3">
+                    {dict.hero.statsLabels[s.labelKey as keyof typeof dict.hero.statsLabels]}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </Reveal>
+        </div>
+      </Container>
     </section>
   );
 }

@@ -1,31 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Fraunces, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { isLocale, locales, type Locale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import { profile, skillGroups, SITE_URL } from "@/lib/profile";
-import { ThemeProvider } from "@/components/providers/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { Chatbot } from "@/components/chatbot/chatbot";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
-const instrument = Instrument_Serif({
+const hanken = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-hanken", display: "swap" });
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: "400",
   style: ["normal", "italic"],
-  variable: "--font-instrument",
+  variable: "--font-fraunces",
   display: "swap",
 });
+const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono-jb", display: "swap" });
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#07070a" },
-    { media: "(prefers-color-scheme: light)", color: "#fafafb" },
-  ],
-  colorScheme: "dark light",
+  themeColor: "#fbf8f3",
+  colorScheme: "light",
 };
 
 export function generateStaticParams() {
@@ -143,27 +139,31 @@ export default async function LocaleLayout({
   };
 
   return (
-    <html lang={locale} className={`${inter.variable} ${instrument.variable}`} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={`${hanken.variable} ${fraunces.variable} ${mono.variable}`}
+    >
       <body className="font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false} disableTransitionOnChange>
-          <a
-            href="#main"
-            className="sr-only z-[70] rounded-full bg-accent px-4 py-2 text-sm text-accent-foreground focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
-          >
-            {dict.common.skipToContent}
-          </a>
+        <a
+          href="#main"
+          className="sr-only z-[70] bg-accent px-4 py-2 text-sm text-accent-ink focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          {dict.common.skipToContent}
+        </a>
 
-          <ScrollProgress />
-          <Navbar dict={dict} locale={locale} />
-          <main id="main">{children}</main>
-          <Footer dict={dict} locale={locale} />
-          <Chatbot dict={dict.assistant} locale={locale} />
+        <div className="grain" aria-hidden />
+        <ScrollProgress />
+        <Navbar dict={dict} locale={locale} />
+        <main id="main" className="relative z-[2]">
+          {children}
+        </main>
+        <Footer dict={dict} locale={locale} />
+        <Chatbot dict={dict.assistant} locale={locale} />
 
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
-          />
-        </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+        />
       </body>
     </html>
   );
