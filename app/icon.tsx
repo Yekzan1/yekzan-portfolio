@@ -13,13 +13,12 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#7a2230",
-          color: "#fbf8f3",
+          background: "linear-gradient(135deg, #8b5cf6 0%, #38bdf8 100%)",
+          color: "#fff",
           fontSize: 30,
-          fontWeight: 600,
-          fontFamily: "Georgia, serif",
+          fontWeight: 700,
           letterSpacing: "-0.04em",
-          borderRadius: 12,
+          borderRadius: 16,
         }}
       >
         YK

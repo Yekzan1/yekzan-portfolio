@@ -1,3 +1,4 @@
+import { ArrowUp, Heart, Mail } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/dictionaries/types";
 import { profile } from "@/lib/profile";
@@ -22,72 +23,77 @@ export function Footer({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   ];
 
   return (
-    <footer className="relative z-[2] border-t border-line bg-paper-2">
+    <footer className="relative border-t border-border py-14">
       <Container>
-        <div className="grid gap-12 py-16 md:grid-cols-[1.6fr_1fr_1fr] lg:py-20">
-          <div className="max-w-xs">
-            <a href="#hero" className="font-display text-2xl text-ink">
-              {profile.name}
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          {/* Brand */}
+          <div className="max-w-sm">
+            <a href="#hero" className="flex items-center gap-2.5">
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-sm font-semibold text-accent-foreground">
+                {profile.initials}
+              </span>
+              <span className="text-sm font-semibold tracking-tight">{profile.name}</span>
             </a>
-            <p className="mt-4 leading-relaxed text-ink-2">{dict.footer.tagline}</p>
+            <p className="mt-4 text-sm leading-relaxed text-muted">{dict.footer.tagline}</p>
             <a
               href={`mailto:${profile.email}`}
-              className="ul-static mt-5 inline-block text-ink"
+              className="mt-4 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-accent"
             >
+              <Mail className="h-4 w-4" />
               {profile.email}
             </a>
+            {profile.socials.length > 0 && (
+              <div className="mt-4 flex items-center gap-2">
+                {profile.socials.map((s) => (
+                  <a
+                    key={s.href}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className="grid h-9 w-9 place-items-center rounded-full border border-border text-muted transition-colors hover:border-border-strong hover:text-foreground"
+                  >
+                    <GitHubMark className="h-4 w-4" />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
+          {/* Nav */}
           <nav aria-label={locale === "fr" ? "Pied de page" : "Footer"}>
-            <p className="eyebrow uppercase tracking-[0.14em] text-accent">Navigation</p>
-            <ul className="mt-5 flex flex-col gap-2.5">
+            <ul className="grid grid-cols-2 gap-x-10 gap-y-2.5 text-sm sm:flex sm:flex-col">
               {links.map((link) => (
                 <li key={link.id}>
-                  <a href={`#${link.id}`} className="text-ink-2 transition-colors hover:text-ink">
+                  <a href={`#${link.id}`} className="text-muted transition-colors hover:text-foreground">
                     {link.label}
                   </a>
                 </li>
               ))}
             </ul>
           </nav>
+        </div>
 
-          <div>
-            <p className="eyebrow uppercase tracking-[0.14em] text-accent">
-              {locale === "fr" ? "Ailleurs" : "Elsewhere"}
-            </p>
-            <ul className="mt-5 flex flex-col gap-2.5">
-              {profile.socials.map((s) => (
-                <li key={s.href}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-ink-2 transition-colors hover:text-ink"
-                  >
-                    <GitHubMark className="h-4 w-4" />
-                    {s.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 text-xs text-muted-2 sm:flex-row">
+          <p>
+            © {year} {profile.name}. {dict.footer.rights}
+          </p>
+          <p className="inline-flex items-center gap-1.5">
+            {dict.footer.builtWith}
+          </p>
+          <div className="flex items-center gap-4">
+            <span className="inline-flex items-center gap-1.5">
+              {dict.footer.madeIn} <Heart className="h-3 w-3 text-accent" />
+            </span>
+            <a
+              href="#hero"
+              className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+            >
+              {dict.footer.backToTop}
+              <ArrowUp className="h-3 w-3" />
+            </a>
           </div>
         </div>
-
-        <div className="flex flex-col gap-3 border-t border-line py-7 text-sm text-ink-3 sm:flex-row sm:items-center sm:justify-between">
-          <span>
-            © {year} {profile.name}. {dict.footer.rights}
-          </span>
-          <span>{dict.footer.builtWith}</span>
-          <a href="#hero" className="ul-static text-ink-2 transition-colors hover:text-ink">
-            {dict.footer.backToTop} ↑
-          </a>
-        </div>
-
-        <p className="pb-8 text-xs leading-relaxed text-ink-3">
-          {locale === "fr"
-            ? `Éditeur : ${profile.name} — Hébergeur : Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA.`
-            : `Published by ${profile.name} — Hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA.`}
-        </p>
       </Container>
     </footer>
   );

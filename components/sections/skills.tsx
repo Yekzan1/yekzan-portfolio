@@ -1,48 +1,67 @@
+import {
+  Code2,
+  Server,
+  Database,
+  ShoppingCart,
+  Cpu,
+  Network,
+  Search,
+  Wrench,
+  type LucideIcon,
+} from "lucide-react";
 import type { Dictionary } from "@/lib/dictionaries/types";
 import { skillGroups } from "@/lib/profile";
 import { Container, Section, SectionHeading } from "@/components/ui/section";
-import { Reveal } from "@/components/ui/reveal";
+import { RevealGroup, RevealItem } from "@/components/ui/reveal";
+
+const GROUP_ICONS: Record<string, LucideIcon> = {
+  frontend: Code2,
+  backend: Server,
+  data: Database,
+  cms: ShoppingCart,
+  systems: Cpu,
+  network: Network,
+  seo: Search,
+  tools: Wrench,
+};
 
 export function Skills({ dict }: { dict: Dictionary }) {
   return (
-    <Section id="skills" tint>
+    <Section id="skills" className="bg-background-soft/40">
       <Container>
-        <SectionHeading
-          index="02"
-          eyebrow={dict.skills.eyebrow}
-          title={dict.skills.title}
-          lead={dict.skills.lead}
-        />
+        <SectionHeading eyebrow={dict.skills.eyebrow} title={dict.skills.title} lead={dict.skills.lead} />
 
-        <dl className="mt-14 border-t border-line">
-          {skillGroups.map((group, i) => {
+        <RevealGroup
+          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+          stagger={0.06}
+        >
+          {skillGroups.map((group) => {
+            const Icon = GROUP_ICONS[group.id] ?? Code2;
             const title = dict.skills.groups[group.id as keyof typeof dict.skills.groups];
             return (
-              <Reveal key={group.id} delay={Math.min(i * 0.03, 0.18)}>
-                <div className="grid gap-3 border-b border-line py-6 sm:grid-cols-[220px_1fr] sm:gap-10 sm:py-7">
-                  <dt className="flex items-baseline gap-4">
-                    <span className="eyebrow tnum text-accent">
-                      {String(i + 1).padStart(2, "0")}
+              <RevealItem key={group.id}>
+                <div className="card-hover group h-full rounded-2xl border border-border bg-surface p-5">
+                  <div className="flex items-center gap-3">
+                    <span className="grid h-9 w-9 place-items-center rounded-lg border border-border bg-background-soft text-accent transition-colors group-hover:border-accent/40">
+                      <Icon className="h-4.5 w-4.5" />
                     </span>
-                    <span className="font-display text-[1.3rem] leading-tight text-ink">{title}</span>
-                  </dt>
-                  <dd className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[1.05rem] sm:pt-1">
-                    {group.items.map((item, idx) => (
-                      <span key={item} className="inline-flex items-center gap-5">
-                        {idx > 0 && (
-                          <span className="text-line-strong" aria-hidden>
-                            ·
-                          </span>
-                        )}
-                        <span className="text-ink-2 transition-colors hover:text-accent">{item}</span>
-                      </span>
+                    <h3 className="text-sm font-semibold tracking-tight">{title}</h3>
+                  </div>
+                  <ul className="mt-4 flex flex-wrap gap-1.5">
+                    {group.items.map((item) => (
+                      <li
+                        key={item}
+                        className="rounded-md border border-border bg-background-soft px-2 py-1 text-xs text-muted transition-colors hover:border-border-strong hover:text-foreground"
+                      >
+                        {item}
+                      </li>
                     ))}
-                  </dd>
+                  </ul>
                 </div>
-              </Reveal>
+              </RevealItem>
             );
           })}
-        </dl>
+        </RevealGroup>
       </Container>
     </Section>
   );

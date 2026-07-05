@@ -2,35 +2,13 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { RefreshCw, Send, Sparkles, X } from "lucide-react";
 import type { Locale } from "@/lib/i18n/config";
 import type { Dictionary } from "@/lib/dictionaries/types";
 import { cn } from "@/lib/utils";
 
 type Assistant = Dictionary["assistant"];
 type Msg = { id: number; role: "user" | "assistant"; content: string; seeded?: boolean };
-
-const stroke = { fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round" } as const;
-
-const IconChat = (p: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={p.className} aria-hidden {...stroke}>
-    <path d="M21 12a8 8 0 0 1-11.5 7.2L3 21l1.8-6.5A8 8 0 1 1 21 12Z" />
-  </svg>
-);
-const IconClose = (p: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={p.className} aria-hidden {...stroke}>
-    <path d="M6 6l12 12M18 6L6 18" />
-  </svg>
-);
-const IconReset = (p: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={p.className} aria-hidden {...stroke}>
-    <path d="M3 12a9 9 0 1 0 3-6.7M3 4v4h4" />
-  </svg>
-);
-const IconSend = (p: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={p.className} aria-hidden {...stroke}>
-    <path d="M5 12h13M12 6l6 6-6 6" />
-  </svg>
-);
 
 export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
   const [open, setOpen] = useState(false);
@@ -51,6 +29,8 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
     { id: 0, role: "assistant" as const, content: dict.greeting, seeded: true },
   ];
 
+  // Open via global event (used by the Assistant section CTA). An optional
+  // `detail.question` is sent automatically once the panel is open.
   useEffect(() => {
     const handler = (e: Event) => {
       setOpen(true);
@@ -61,6 +41,7 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
     return () => window.removeEventListener("open-assistant", handler);
   }, []);
 
+  // Seed greeting on first open; focus input.
   useEffect(() => {
     if (open) {
       setMessages((prev) => (prev.length ? prev : seedGreeting()));
@@ -70,10 +51,12 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
+  // Autoscroll to newest message.
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
+  // Close on Escape.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     if (open) window.addEventListener("keydown", onKey);
@@ -109,6 +92,7 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
     }
   }
 
+  // Fire a pending question (from the Assistant section CTA) once open.
   useEffect(() => {
     if (open && pending) {
       send(pending);
@@ -134,19 +118,20 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className={cn(
-          "shadow-paper-lg fixed bottom-5 right-5 z-50 grid h-13 w-13 place-items-center rounded-full bg-accent text-accent-ink sm:bottom-6 sm:right-6",
+          "fixed bottom-5 right-5 z-50 grid h-14 w-14 place-items-center rounded-full bg-accent text-accent-foreground shadow-[0_10px_40px_-8px_var(--ring)] sm:bottom-6 sm:right-6",
           open && "max-sm:hidden",
         )}
       >
+        <span className="absolute inset-0 -z-10 rounded-full bg-accent opacity-60 blur-md" aria-hidden />
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
-            key={open ? "x" : "chat"}
-            initial={{ rotate: -45, opacity: 0 }}
+            key={open ? "x" : "spark"}
+            initial={{ rotate: -90, opacity: 0 }}
             animate={{ rotate: 0, opacity: 1 }}
-            exit={{ rotate: 45, opacity: 0 }}
+            exit={{ rotate: 90, opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {open ? <IconClose className="h-5 w-5" /> : <IconChat className="h-5 w-5" />}
+            {open ? <X className="h-6 w-6" /> : <Sparkles className="h-6 w-6" />}
           </motion.span>
         </AnimatePresence>
       </motion.button>
@@ -158,17 +143,21 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
             id={dialogId}
             role="dialog"
             aria-label={dict.headerTitle}
-            initial={{ opacity: 0, y: 24, scale: 0.97 }}
+            initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 24, scale: 0.97 }}
+            exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-            className="shadow-paper-lg fixed inset-x-3 bottom-3 z-50 flex h-[min(82svh,40rem)] flex-col overflow-hidden rounded-md border border-line-strong bg-card sm:inset-x-auto sm:bottom-24 sm:right-6 sm:h-[min(34rem,72svh)] sm:w-[23rem]"
+            className="fixed inset-x-3 bottom-3 z-50 flex h-[min(82svh,40rem)] flex-col overflow-hidden rounded-3xl border border-border bg-background-soft/95 shadow-2xl backdrop-blur-xl sm:inset-x-auto sm:bottom-24 sm:right-6 sm:h-[min(34rem,72svh)] sm:w-[24rem]"
           >
-            <header className="flex items-center gap-3 border-b border-line px-4 py-3.5">
+            {/* Header */}
+            <header className="flex items-center gap-3 border-b border-border px-4 py-3.5">
+              <span className="relative grid h-9 w-9 place-items-center rounded-full bg-accent/15 text-accent">
+                <Sparkles className="h-4.5 w-4.5" />
+              </span>
               <div className="min-w-0 flex-1">
-                <p className="truncate font-display text-[1.05rem] text-ink">{dict.headerTitle}</p>
-                <p className="flex items-center gap-1.5 text-xs text-ink-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                <p className="truncate text-sm font-semibold tracking-tight">{dict.headerTitle}</p>
+                <p className="flex items-center gap-1.5 text-xs text-muted">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   {dict.online}
                 </p>
               </div>
@@ -177,20 +166,21 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
                 aria-label={dict.reset}
                 title={dict.reset}
                 onClick={() => setMessages(seedGreeting())}
-                className="grid h-8 w-8 place-items-center rounded-sm text-ink-3 transition-colors hover:bg-paper-2 hover:text-ink"
+                className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-surface hover:text-foreground"
               >
-                <IconReset className="h-4 w-4" />
+                <RefreshCw className="h-4 w-4" />
               </button>
               <button
                 type="button"
                 aria-label="Close"
                 onClick={() => setOpen(false)}
-                className="grid h-8 w-8 place-items-center rounded-sm text-ink-3 transition-colors hover:bg-paper-2 hover:text-ink"
+                className="grid h-8 w-8 place-items-center rounded-full text-muted transition-colors hover:bg-surface hover:text-foreground"
               >
-                <IconClose className="h-4 w-4" />
+                <X className="h-4 w-4" />
               </button>
             </header>
 
+            {/* Messages */}
             <div
               ref={scrollRef}
               role="log"
@@ -204,11 +194,11 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
               ))}
 
               {loading && (
-                <div className="flex items-center gap-1.5 px-1 text-ink-3">
+                <div className="flex items-center gap-1.5 px-1 text-muted">
                   {[0, 1, 2].map((i) => (
                     <motion.span
                       key={i}
-                      className="h-1.5 w-1.5 rounded-full bg-ink-3"
+                      className="h-1.5 w-1.5 rounded-full bg-muted"
                       animate={{ opacity: [0.3, 1, 0.3], y: [0, -2, 0] }}
                       transition={{ repeat: Infinity, duration: 1, delay: i * 0.15 }}
                     />
@@ -218,13 +208,15 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
 
               {showSuggestions && !loading && (
                 <div className="space-y-2 pt-1">
-                  <p className="eyebrow px-1 uppercase tracking-[0.14em]">{dict.suggestionsTitle}</p>
+                  <p className="px-1 text-xs font-medium uppercase tracking-wider text-muted-2">
+                    {dict.suggestionsTitle}
+                  </p>
                   {dict.suggestions.map((s) => (
                     <button
                       key={s}
                       type="button"
                       onClick={() => send(s)}
-                      className="block w-full rounded-sm border border-line bg-paper px-3 py-2 text-left text-sm text-ink-2 transition-colors hover:border-line-strong hover:text-ink"
+                      className="block w-full rounded-xl border border-border bg-surface px-3 py-2 text-left text-sm text-muted transition-colors hover:border-border-strong hover:text-foreground"
                     >
                       {s}
                     </button>
@@ -233,32 +225,33 @@ export function Chatbot({ dict, locale }: { dict: Assistant; locale: Locale }) {
               )}
             </div>
 
+            {/* Input */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 send(input);
               }}
-              className="border-t border-line p-3"
+              className="border-t border-border p-3"
             >
-              <div className="flex items-center gap-2 rounded-sm border border-line bg-paper px-2 py-1.5 focus-within:border-line-strong">
+              <div className="flex items-center gap-2 rounded-full border border-border bg-background px-2 py-1.5 focus-within:border-border-strong">
                 <input
                   ref={inputRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder={dict.inputPlaceholder}
-                  className="min-w-0 flex-1 bg-transparent px-2 text-sm text-ink outline-none placeholder:text-ink-3"
+                  className="min-w-0 flex-1 bg-transparent px-2 text-sm outline-none placeholder:text-muted-2"
                   maxLength={1000}
                 />
                 <button
                   type="submit"
                   aria-label={dict.send}
                   disabled={!input.trim() || loading}
-                  className="grid h-8 w-8 shrink-0 place-items-center rounded-sm bg-accent text-accent-ink transition-opacity disabled:opacity-40"
+                  className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-accent-foreground transition-opacity disabled:opacity-40"
                 >
-                  <IconSend className="h-4 w-4" />
+                  <Send className="h-4 w-4" />
                 </button>
               </div>
-              <p className="mt-2 px-1 text-center text-[0.65rem] leading-tight text-ink-3">
+              <p className="mt-2 px-1 text-center text-[0.65rem] leading-tight text-muted-2">
                 {dict.disclaimer}
               </p>
             </form>
@@ -280,10 +273,10 @@ function Bubble({ role, content }: { role: "user" | "assistant"; content: string
     >
       <div
         className={cn(
-          "max-w-[85%] whitespace-pre-wrap rounded-md px-3.5 py-2.5 text-sm leading-relaxed",
+          "max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2.5 text-sm leading-relaxed",
           isUser
-            ? "rounded-br-xs bg-accent text-accent-ink"
-            : "rounded-bl-xs border border-line bg-paper-2 text-ink",
+            ? "rounded-br-md bg-accent text-accent-foreground"
+            : "rounded-bl-md border border-border bg-surface text-foreground",
         )}
       >
         {content}

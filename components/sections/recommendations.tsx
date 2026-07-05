@@ -1,53 +1,54 @@
+import { BadgeCheck, Quote } from "lucide-react";
 import type { Dictionary } from "@/lib/dictionaries/types";
 import { recommenders } from "@/lib/profile";
 import { Container, Section, SectionHeading } from "@/components/ui/section";
-import { Reveal } from "@/components/ui/reveal";
+import { RevealGroup, RevealItem } from "@/components/ui/reveal";
 
 export function Recommendations({ dict }: { dict: Dictionary }) {
   return (
-    <Section id="recommendations">
+    <Section id="recommendations" className="bg-background-soft/40">
       <Container>
         <SectionHeading
-          index="04"
           eyebrow={dict.recommendations.eyebrow}
           title={dict.recommendations.title}
           lead={dict.recommendations.lead}
         />
 
-        <div className="mt-16 flex flex-col">
-          {recommenders.map((rec, i) => {
-            const quote =
-              dict.recommendations.quotes[rec.id as keyof typeof dict.recommendations.quotes];
+        <RevealGroup className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3" stagger={0.1}>
+          {recommenders.map((rec) => {
+            const quote = dict.recommendations.quotes[rec.id as keyof typeof dict.recommendations.quotes];
             return (
-              <Reveal key={rec.id}>
-                <figure className="grid gap-6 border-t border-line py-12 md:grid-cols-[1fr_2.1fr] md:gap-14">
-                  <figcaption className="flex flex-col">
-                    <span className="eyebrow tnum text-accent">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="mt-4 font-display text-xl text-ink">{rec.name}</span>
-                    <span className="mt-1 text-ink-2">{rec.role}</span>
-                    <span className="eyebrow mt-4 uppercase tracking-[0.14em] text-ink-3">
-                      {dict.recommendations.verified}
-                    </span>
-                  </figcaption>
+              <RevealItem key={rec.id} className="h-full">
+                <figure className="card-hover relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-surface p-6 sm:p-7">
+                  <Quote className="h-8 w-8 text-accent/30" aria-hidden />
 
-                  <blockquote className="relative">
-                    <span
-                      className="absolute -left-1 -top-6 font-display text-6xl leading-none text-accent/30 select-none"
-                      aria-hidden
-                    >
-                      &ldquo;
-                    </span>
-                    <p className="font-display text-[clamp(1.35rem,2.5vw,1.85rem)] italic leading-[1.4] text-ink">
+                  <blockquote className="mt-4 flex-1">
+                    <p className="text-pretty font-serif text-lg italic leading-relaxed text-foreground/90">
                       {quote}
                     </p>
                   </blockquote>
+
+                  <figcaption className="mt-6 flex items-center gap-3 border-t border-border pt-5">
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-accent/15 text-sm font-semibold text-accent">
+                      {rec.initials}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold tracking-tight">{rec.name}</p>
+                      <p className="truncate text-xs text-muted">{rec.role}</p>
+                    </div>
+                    <span
+                      className="ml-auto inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-1 text-[0.65rem] font-medium text-emerald-400"
+                      title={dict.recommendations.verified}
+                    >
+                      <BadgeCheck className="h-3.5 w-3.5" />
+                      <span className="hidden sm:inline">{dict.recommendations.verified}</span>
+                    </span>
+                  </figcaption>
                 </figure>
-              </Reveal>
+              </RevealItem>
             );
           })}
-        </div>
+        </RevealGroup>
       </Container>
     </Section>
   );
